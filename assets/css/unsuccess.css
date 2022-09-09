@@ -1,0 +1,26 @@
+
+* {
+    box-sizing: border-box;
+}
+
+.text {
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    text-align: center;
+}
+.btn1 {
+    top: 60%;
+    left: 37.2%;
+    position: absolute;
+    height: 50px;
+    width: 25%;
+    background-color: black;
+    color: white;
+    font-weight: bold;
+}

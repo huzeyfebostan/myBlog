@@ -5,6 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/huzeyfebostan/myBlog/database"
 	"github.com/huzeyfebostan/myBlog/models"
+	"golang.org/x/crypto/bcrypt"
 )
 
 /*var store = session.New(session.Config{
@@ -27,8 +28,14 @@ func LoginPost(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 
-	if err = database.DB().Where("email = ? and password = ?", request.Email, request.Password).First(&user).Error; err != nil {
-		return c.Redirect("unsuccess")
+	database.DB().Where("email = ?", request.Email).First(&user)
+
+	if user.Id == 0 {
+		return c.Redirect("/unsucces")
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(request.Password)); err != nil {
+		return c.Redirect("/unsuccess")
 	}
 
 	/*sess, err := store.Get(c)

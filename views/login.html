@@ -1,48 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Modern Flat Design Login Form Example</title>
     <link rel="stylesheet" href="../assets/css/login.css">
-    <title>Login</title>
+
 </head>
 <body>
-<div class="pagecontainer">
-    <form action="/login" method="POST">
-        <div class="container">
-            <div class="imgcontainer" >
-                <img src="../assets/image/avtr.png" alt="Avatar" class="avatar">
-            </div>
-            <h2>Login</h2>
-            <div class = "mailpaswcontainer">
-                <div class="lblcontainer">
-                    <label for="email">Email address</label>
-                </div>
-                <div class="inputcontainer">
-                    <input name="email"
-                           type="text"
-                           placeholder="Enter E-mail"
-                           required>
-                </div>
-                <div class="lblcontainer">
-                    <label for="password">Password</label>
-                    <span class="psw"><a href="#"> Forget password?</a></span>
-                </div>
-                <div class="inputcontainer">
-                    <input name="password"
-                           type="password"
-                           placeholder="*********"
-                           required>
-                </div>
-                <button type="submit"><b>Login</b></button>
-            </div>
-            <label>
-                <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label>
-            <div class="container" >
-                <button type="button" class="cancelbtn">Cancel</button>
-            </div>
-        </div>
-    </form>
+<!-- partial:index.partial.html -->
+<div class="login-page">
+    <div class="form">
+        <form action="/login" method="post" class="login-form">
+            <input name="email" type="text" placeholder="E-mail Address"/>
+            <input name="password" type="password" placeholder="******"/>
+            <button>login</button>
+            <p class="message">Not registered? <a href="/register">Create an account</a></p>
+        </form>
+    </div>
 </div>
 </body>
 </html>

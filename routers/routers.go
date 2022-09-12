@@ -14,6 +14,8 @@ func Setup(app *fiber.App) {
 	app.Get("/login", handlers.LoginGet)
 	app.Post("/login", handlers.LoginPost)
 
+	app.Get("/success", handlers.Logout)
+
 	app.Get("/admin", handlers.Admin)
 
 	app.Get("/unsuccess", handlers.Unsuccess)

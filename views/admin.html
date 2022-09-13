@@ -12,51 +12,38 @@
     <form action="/admin" method="get">
         <div>
             <div class="itemcontainer">
-                <label for="fnametxt">Username</label>
-                <label name="fnametxt"
-                       id="fnametxt"
+                <label for="fnametxt">{{.FirstName}}</label>
+                <label id="fnametxt"
                        type="text"
-                       placeholder=""
                 ></label>
-                <p id="firstname"></p>
             </div>
             <div class="itemcontainer">
-                <label for="lnametxt">Lastname</label>
+                <label for="lnametxt">{{.LastName}}</label>
                 <label name="lnametxt"
                        id="lnametxt"
                        type="text"
-                       placeholder="sss"
+                       placeholder=""
                 ></label>
-                <p id="lastname"></p>
             </div>
             <div class="itemcontainer">
-                <label for="emailtxt">Email</label>
+                <label for="emailtxt">{{.Email}}</label>
                 <label name="emailtxt"
                        id="emailtxt"
                        type="text"
                        placeholder=""
                 ></label>
-                <p id="email"></p>
             </div>
-            <label for="pswlbl">Password</label>
+            <label for="pswlbl">{{.Password}}</label>
             <label name="pswlbl"
                    id="pswlbl"
                    type="password"
                    placeholder=""
             ></label>
-            <p id="password"></p>
         </div>
-        <form action="/success", method="GET">
-            <button type="submit"><b>Logout</b></button>
-        </form>
+    </form>
+    <form action="/success", method="GET">
+        <button type="submit"><b>Logout</b></button>
     </form>
 </div>
-
-<script>
-    document.getElementById("fname")
-    document.getElementById("lname")
-    document.getElementById("email")
-    document.getElementById("password")
-</script>
 </body>
 </html>

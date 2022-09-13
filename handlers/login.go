@@ -5,6 +5,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/huzeyfebostan/myBlog/database"
+	"github.com/huzeyfebostan/myBlog/middlewares"
 	"github.com/huzeyfebostan/myBlog/models"
 	"golang.org/x/crypto/bcrypt"
 	"strconv"
@@ -27,8 +28,9 @@ func LoginPost(c *fiber.Ctx) error {
 
 	var request models.RequestSignIn
 	var user models.User
-	nowTime := time.Now()
-	expireTime := nowTime.Add(time.Hour * 24)
+
+	/*nowTime := time.Now()
+	expireTime := nowTime.Add(time.Hour * 24)*/
 
 	err := c.BodyParser(&request)
 	if err != nil {
@@ -47,20 +49,37 @@ func LoginPost(c *fiber.Ctx) error {
 
 	/*sess, err := store.Get(c)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 
 	sess.Save()
 
+	sess.Set("fname", user.FirstName)
+	sess.Set("lname", user.LastName)
 	sess.Set("email", user.Email)
-	sess.Set("password", user.Password)*/
+	sess.Set("psw", user.Password)*/
 
-	clams := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.RegisteredClaims{
+	/*clams := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.RegisteredClaims{
 		Issuer:    strconv.Itoa(int(user.Id)),
 		ExpiresAt: jwt.NewNumericDate(expireTime),
 	})
 
 	token, err := clams.SignedString([]byte(SecretKey))
+
+	cookie := fiber.Cookie{
+		Name:     "jwt",
+		Value:    token,
+		Expires:  time.Now().Add(time.Hour * 24),
+		HTTPOnly: true,
+	}
+
+	c.Cookie(&cookie)*/
+
+	token, err := middlewares.GenerateJwt(strconv.Itoa(int(user.Id)))
+
+	if err != nil {
+		return err
+	}
 
 	cookie := fiber.Cookie{
 		Name:     "jwt",
@@ -112,4 +131,25 @@ func UserControl(c *fiber.Ctx) bool {
 	database.DB().Where("id = ?", claims.Issuer).First(&user)
 
 	return true
+}
+
+func GetUser(c *fiber.Ctx) error {
+	temp := GetUserId(c.Params("key"))
+
+	/*user := models.User{
+		Id: temp.Id,
+	}*/
+
+	database.DB().Preload("ID ").Find(&temp)
+
+	return c.Render("admin", temp)
+}
+
+func GetUserId(id string) models.User {
+	var user models.User
+	err := database.DB().Where("id = ?", id).First(&user).Error
+	if err != nil {
+		fmt.Println(err)
+	}
+	return user
 }

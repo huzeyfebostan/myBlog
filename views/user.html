@@ -1,44 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../assets/css/user.css">
+    <link rel="stylesheet" href="../assets/css/admin.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Admin Page</title>
+    <title>User</title>
 </head>
 <body>
-<h2>User</h2>
+<h2>Admin</h2>
 <div class="pagecontainer">
-    <form action="/admin" method="get">
+    <form action="/user" method="get">
         <div>
             <div class="itemcontainer">
-                <label for="fnametxt">Username</label>
-                <label name="fnametxt"
+                <label for="fnametxt">First Name</label>
+                <label id="fnametxt"
                        type="text"
-                       placeholder=""
                 ></label>
+                <p {{.FirstName}}></p>
             </div>
             <div class="itemcontainer">
-                <label for="lnametxt">Lastname</label>
+                <label for="lnametxt">Last Name</label>
                 <label name="lnametxt"
+                       id="lnametxt"
                        type="text"
                        placeholder=""
                 ></label>
+                <p {{.LastName}}></p>
             </div>
             <div class="itemcontainer">
-                <label for="emailtxt">Email</label>
+                <label for="emailtxt">E-mail</label>
                 <label name="emailtxt"
+                       id="emailtxt"
                        type="text"
                        placeholder=""
                 ></label>
+                <p {{.Email}}></p>
             </div>
             <label for="pswlbl">Password</label>
             <label name="pswlbl"
+                   id="pswlbl"
                    type="password"
                    placeholder=""
             ></label>
+            <p {{.Password}}></p>
         </div>
     </form>
+    <!--<form action="/success", method="GET">
+        <button type="submit"><b>Logout</b></button>
+    </form>-->
 </div>
 </body>
 </html>

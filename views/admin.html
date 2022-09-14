@@ -9,41 +9,32 @@
 <body>
 <h2>Admin</h2>
 <div class="pagecontainer">
-    <form action="/admin" method="get">
+    <form action="/admin/{{.ID}}" method="post">
         <div>
             <div class="itemcontainer">
-                <label for="fnametxt">{{.FirstName}}</label>
-                <label id="fnametxt"
-                       type="text"
-                ></label>
+                <p> {{.FirstName}}</p>
             </div>
             <div class="itemcontainer">
-                <label for="lnametxt">{{.LastName}}</label>
-                <label name="lnametxt"
-                       id="lnametxt"
-                       type="text"
-                       placeholder=""
-                ></label>
+                <p> {{.LastName}}</p>
             </div>
             <div class="itemcontainer">
-                <label for="emailtxt">{{.Email}}</label>
-                <label name="emailtxt"
-                       id="emailtxt"
-                       type="text"
-                       placeholder=""
-                ></label>
+                <p> {{.Email}}</p>
             </div>
-            <label for="pswlbl">{{.Password}}</label>
-            <label name="pswlbl"
-                   id="pswlbl"
-                   type="password"
-                   placeholder=""
-            ></label>
+            <div class="itemContainer">
+                <p> {{.Password}}</p>
+            </div>
         </div>
     </form>
-    <form action="/success", method="GET">
-        <button type="submit"><b>Logout</b></button>
-    </form>
+    <div class="itemContainer">
+        <form action="/success", method="get">
+            <button type="submit"><b>Logout</b></button>
+        </form>
+    </div>
+    <div class="itemContainer">
+        <form action="/update", method="get">
+            <button type="submit"><b>Update</b></button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

@@ -34,7 +34,7 @@ func LoginPost(c *fiber.Ctx) error {
 
 	err := c.BodyParser(&request)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 
 	database.DB().Where("email = ?", request.Email).First(&user)
@@ -136,13 +136,9 @@ func UserControl(c *fiber.Ctx) bool {
 func GetUser(c *fiber.Ctx) error {
 	temp := GetUserId(c.Params("key"))
 
-	/*user := models.User{
-		Id: temp.Id,
-	}*/
-
 	database.DB().Preload("ID ").Find(&temp)
 
-	return c.Render("admin", temp)
+	return c.Render("update", temp)
 }
 
 func GetUserId(id string) models.User {
@@ -152,4 +148,50 @@ func GetUserId(id string) models.User {
 		fmt.Println(err)
 	}
 	return user
+}
+
+func GetUpdate(c *fiber.Ctx) error {
+	key := c.Params("key")
+
+	var request, temp models.User
+
+	if err := c.BodyParser(&request); err != nil {
+		return err
+	}
+	if err := database.DB().Where("id = ?", key).First(&temp).Error; err != nil {
+		return err
+	}
+	request.Id = temp.Id
+
+	url := fmt.Sprintf("/update/%d", temp.Id)
+
+	temp = request
+	database.DB().Save(&temp)
+
+	return c.Redirect(url)
+}
+
+func Update(c *fiber.Ctx) error {
+	//temp := GetUserId(c.Params("key"))
+	return c.Render("update", fiber.Map{})
+}
+
+func Delete(c *fiber.Ctx) error {
+	/*key := c.Params("key")
+
+	var deluser models.User
+	if err := database.DB().Where("id = ?", key).Delete(&deluser).Error; err != nil {
+		return err
+	}*/
+
+	id, _ := strconv.Atoi(c.Params("key"))
+
+	user := models.User{
+		Id: uint(id),
+	}
+	database.DB().Where("id = ?", id).First(&user)
+
+	database.DB().Delete(&user)
+
+	return c.Redirect("/success")
 }

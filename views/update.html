@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html>
+<!--<html>
 <head>
-  <link rel="stylesheet" href="../assets/css/admin.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
+  <link rel="stylesheet" href="../assets/css/login.css">
   <title>Update Page</title>
 </head>
 <body>
@@ -35,6 +34,41 @@
     <button type="submit"><b>Update</b></button>
   </form>
   <div class="itemContainer">
+    <form action="/delete/{{.Id}}" method="get">
+      <button type="submit"><b>Delete</b></button>
+    </form>
+  </div>
+</div>
+</body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Update</title>
+  <link rel="stylesheet" href="../assets/css/update.css">
+
+</head>
+<body>
+<div class="login-page">
+  <div class="form">
+    <h2>Update Panel</h2>
+    <form action="/update/{{.Id}}" method="post">
+      <h4>First Name</h4>
+      <p> {{.FirstName}}</p>
+      <input name="firstname" type="text" {{.FirstName}}/>
+      <h4>Last Name</h4>
+      <p> {{.LastName}}</p>
+      <input name="lastname" type="text" placeholder="Last Name"/>
+      <h4>E-Mail</h4>
+      <p> {{.Email}}</p>
+      <input name="email" type="text" placeholder="E-mail Address"/>
+      <h4>Password</h4>
+      <p> {{.Password}}</p>
+      <input name="password" type="password" placeholder="******"/>
+      <button type="submit"><b>Update</b></button>
+    </form>
     <form action="/delete/{{.Id}}" method="get">
       <button type="submit"><b>Delete</b></button>
     </form>

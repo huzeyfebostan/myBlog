@@ -19,16 +19,19 @@ func Setup(app *fiber.App) {
 	app.Post("/register", handlers.PostRegister)
 
 	app.Use(middlewares.IsAuthenticated)
-	//TODO: Şifre gizlenecek (sor)
+
+	//TODO: Şifre gizlenecek
 	//TODO: Aynı kullanıcı kayıt kontrolu yap
+
 	app.Get("/user", handlers.User)
 	app.Get("/user/:key", handlers.GetUser)
 
 	app.Get("/admin", handlers.Admin)
+	app.Get("/admin/:key", handlers.GetUser)
 
-	app.Get("/adminUpdate", handlers.AdminUpdate)
-	//app.Get("adminUpdate/:key", handlers.GetUser)
-	app.Get("/update", handlers.GetUpdate)
+	app.Get("/adminUpdate/:key", handlers.GetUser)
+	app.Post("/adminUpdate/:key", handlers.AdminUpdate)
+
 	app.Get("/update/:key", handlers.GetUser)
 	app.Post("/update/:key", handlers.Update)
 

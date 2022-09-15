@@ -29,10 +29,7 @@ func IsAuthenticated(c *fiber.Ctx) error {
 	cookie := c.Cookies("jwt")
 
 	if _, err := ParseJwt(cookie); err != nil {
-		c.Status(fiber.StatusUnauthorized)
-		return c.JSON(fiber.Map{
-			"message": "unauthenticated",
-		})
+		return errors.New("unauthenticated")
 	}
 
 	return c.Next()
@@ -87,7 +84,5 @@ func IsAuthorized(c *fiber.Ctx, page string) error {
 			}
 		}
 	}
-
-	c.Status(fiber.StatusUnauthorized)
-	return errors.New("unauthorized")
+	return c.Redirect("/unsuccess")
 }

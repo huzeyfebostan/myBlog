@@ -14,16 +14,21 @@ func GetRegister(c *fiber.Ctx) error {
 func PostRegister(c *fiber.Ctx) error {
 
 	var request models.RequestRegister
+	var user models.User
 
 	if err := c.BodyParser(&request); err != nil {
 		return err
+	}
+
+	if err := database.DB().Where("email = ?", request.Email).First(&user).Error; err == nil {
+		return errors.New("This mail has been used")
 	}
 
 	if request.Password != request.PasswordConfirm {
 		return errors.New("passwords do not match")
 	}
 
-	user := models.User{
+	user = models.User{
 		FirstName: request.FirstName,
 		LastName:  request.LastName,
 		Email:     request.Email,

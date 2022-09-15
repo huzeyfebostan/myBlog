@@ -15,10 +15,9 @@
       <p> {{.FirstName}}</p>
       <p> {{.LastName}}</p>
       <p> {{.Email}}</p>
-      <p id="passwd" > {{.Password}}</p>
-      <i class="fa fa-eye parola" onClick="parolaGoster('passwd', this)">   </i>
+      <p> ***</p>
     </form>
-    <form action="/update" method="get">
+    <form action="/update/{{.Id}}" method="get">
       <button type="submit"><b>Update</b></button>
     </form>
     <form action="/success" method="get">
@@ -26,18 +25,6 @@
     </form>
   </div>
 </div>
-<script>
-  function parolaGoster(id, el) {
-    let x = document.getElementById(id);
-    if (x.type === "password") {
-      x.type = "text";
-      el.className = 'fa fa-eye-slash parola';
-    } else {
-      x.type = "password";
-      el.className = 'fa fa-eye parola';
-    }
-  }
-</script>
 </body>
 </html>
 

@@ -133,7 +133,7 @@ func GetUser(c *fiber.Ctx) error {
 	temp := GetUserId(c.Params("key"))
 
 	if activeuser.RoleId == 1 {
-		return c.Render("update", temp)
+		return c.Render("adminUpdate", temp)
 	} else {
 		if uint(Id) == temp.Id {
 			database.DB().Preload("id ").Find(&temp)
@@ -162,10 +162,6 @@ func Update(c *fiber.Ctx) error {
 	var request models.RequestRegister
 
 	id, _ := strconv.Atoi(c.Params("key"))
-
-	/*user := models.User{
-		Id: uint(id),
-	}*/
 
 	if err := c.BodyParser(&request); err != nil {
 		return err
@@ -197,6 +193,10 @@ func Update(c *fiber.Ctx) error {
 }
 
 func GetUpdate(c *fiber.Ctx) error {
+	if err := middlewares.IsAuthorized(c, "users"); err != nil {
+		return err
+	}
+
 	cookie := c.Cookies("jwt")
 
 	id, _ := middlewares.ParseJwt(cookie)

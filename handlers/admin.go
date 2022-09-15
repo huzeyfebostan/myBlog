@@ -2,15 +2,19 @@ package handlers
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/huzeyfebostan/myBlog/database"
+	"github.com/huzeyfebostan/myBlog/middlewares"
+	"github.com/huzeyfebostan/myBlog/models"
 )
 
 func Admin(c *fiber.Ctx) error {
-	/*var usr AdminPage
+	cookie := c.Cookies("jwt")
 
-	user, _ := Find()
+	id, _ := middlewares.ParseJwt(cookie)
 
-	usr = AdminPage{
-		User: user,
-	}*/
-	return c.Render("admin", fiber.Map{})
+	var user models.User
+
+	database.DB().Where("id = ?", id).First(&user)
+
+	return c.Render("admin", user)
 }

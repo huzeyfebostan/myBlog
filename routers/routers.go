@@ -19,13 +19,12 @@ func Setup(app *fiber.App) {
 	app.Post("/register", handlers.RegisterPost)
 
 	app.Use(middlewares.IsAuthenticated)
-	//TODO: Admin panelinde kullanıcı bilgileri gözükecek
-	//TODO: Giriş yapan kullanıcının bilgileri otomatik gelecek
 	//TODO: Şifre gizlenecek (sor)
-	//TODO: Bilgileri güncellenen kullanıcının veri tabaınında sadece güncellenen verisi değişecek diğerleri aynı kalacak
+	//TODO: Bilgileri güncellenen kullanıcının veri tabanınında sadece güncellenen verisi değişecek diğerleri aynı kalacak
 	//TODO: Giriş yapan kullanıcı dışında başka kullanıcının bilgileri gözükmeyecek
 	//TODO: Aynı kullanıcı kayıt kontrolu yap
-	app.Get("/user", handlers.UserPage)
+	app.Get("/user", handlers.User)
+	app.Get("/user/:key", handlers.GetUser)
 
 	app.Get("/admin", handlers.Admin)
 

@@ -29,9 +29,6 @@ func LoginPost(c *fiber.Ctx) error {
 	var request models.RequestSignIn
 	var user models.User
 
-	/*nowTime := time.Now()
-	expireTime := nowTime.Add(time.Hour * 24)*/
-
 	err := c.BodyParser(&request)
 	if err != nil {
 		return err
@@ -46,18 +43,6 @@ func LoginPost(c *fiber.Ctx) error {
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(request.Password)); err != nil {
 		return c.Redirect("/unsuccess")
 	}
-
-	/*sess, err := store.Get(c)
-	if err != nil {
-		return err
-	}
-
-	sess.Save()
-
-	sess.Set("fname", user.FirstName)
-	sess.Set("lname", user.LastName)
-	sess.Set("email", user.Email)
-	sess.Set("psw", user.Password)*/
 
 	token, err := middlewares.GenerateJwt(strconv.Itoa(int(user.Id)))
 
@@ -122,6 +107,9 @@ func UserControl(c *fiber.Ctx) bool {
 }
 
 func GetUser(c *fiber.Ctx) error {
+	if err := middlewares.IsAuthorized(c, "users"); err != nil {
+		return err
+	}
 	temp := GetUserId(c.Params("key"))
 
 	database.DB().Preload("id ").Find(&temp)
@@ -193,7 +181,7 @@ func User(c *fiber.Ctx) error {
 
 	database.DB().Where("id = ?", id).First(&user)
 
-	return c.Redirect("success")
+	return c.Render("user", user)
 }
 
 func UserPage(c *fiber.Ctx) error {

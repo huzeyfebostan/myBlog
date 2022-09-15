@@ -12,11 +12,11 @@ func Setup(app *fiber.App) {
 
 	app.Get("/", handlers.Mainpage)
 
-	app.Get("/login", handlers.LoginGet)
-	app.Post("/login", handlers.LoginPost)
+	app.Get("/login", handlers.GetLogin)
+	app.Post("/login", handlers.PostLogin)
 
-	app.Get("/register", handlers.RegisterGet)
-	app.Post("/register", handlers.RegisterPost)
+	app.Get("/register", handlers.GetRegister)
+	app.Post("/register", handlers.PostRegister)
 
 	app.Use(middlewares.IsAuthenticated)
 	//TODO: Şifre gizlenecek (sor)
@@ -26,10 +26,11 @@ func Setup(app *fiber.App) {
 
 	app.Get("/admin", handlers.Admin)
 
-	//app.Get("/admin/:key", handlers.GetUser)
-	app.Get("/update", handlers.Update)
+	app.Get("/adminUpdate", handlers.AdminUpdate)
+	//app.Get("adminUpdate/:key", handlers.GetUser)
+	app.Get("/update", handlers.GetUpdate)
 	app.Get("/update/:key", handlers.GetUser)
-	app.Post("/update/:key", handlers.GetUpdate)
+	app.Post("/update/:key", handlers.Update)
 
 	app.Get("/delete/:key", handlers.Delete)
 	app.Post("/update/:key", handlers.Delete)

@@ -18,3 +18,15 @@ func Admin(c *fiber.Ctx) error {
 
 	return c.Render("admin", user)
 }
+
+func AdminUpdate(c *fiber.Ctx) error {
+	cookie := c.Cookies("jwt")
+
+	id, _ := middlewares.ParseJwt(cookie)
+
+	var user models.User
+
+	database.DB().Where("id = ?", id).First(&user)
+
+	return c.Render("adminUpdate", user)
+}

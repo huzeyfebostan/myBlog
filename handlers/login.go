@@ -21,11 +21,11 @@ import (
 
 const SecretKey = "secret"
 
-func LoginGet(c *fiber.Ctx) error {
+func GetLogin(c *fiber.Ctx) error {
 	return c.Render("login", fiber.Map{})
 }
 
-func LoginPost(c *fiber.Ctx) error {
+func PostLogin(c *fiber.Ctx) error {
 
 	var request models.RequestSignIn
 	var user models.User
@@ -107,6 +107,18 @@ func UserControl(c *fiber.Ctx) bool {
 	return true
 }
 
+func User(c *fiber.Ctx) error {
+	cookie := c.Cookies("jwt")
+
+	id, _ := middlewares.ParseJwt(cookie)
+
+	var user models.User
+
+	database.DB().Where("id = ?", id).First(&user)
+
+	return c.Render("user", user)
+}
+
 func GetUser(c *fiber.Ctx) error {
 	if err := middlewares.IsAuthorized(c, "users"); err != nil {
 		return err
@@ -142,29 +154,58 @@ func GetUserId(id string) models.User {
 	return user
 }
 
-func GetUpdate(c *fiber.Ctx) error {
+func Update(c *fiber.Ctx) error {
 	if err := middlewares.IsAuthorized(c, "users"); err != nil {
 		return err
 	}
 
+	var request models.RequestRegister
+
 	id, _ := strconv.Atoi(c.Params("key"))
 
-	user := models.User{
+	/*user := models.User{
 		Id: uint(id),
+	}*/
+
+	if err := c.BodyParser(&request); err != nil {
+		return err
 	}
 
-	if err := c.BodyParser(&user); err != nil {
-		return err
+	if request.Password != request.PasswordConfirm {
+		return errors.New("passwords do not match")
+	}
+
+	user := models.User{
+		Id:        uint(id),
+		FirstName: request.FirstName,
+		LastName:  request.LastName,
+		Email:     request.Email,
+		Password:  request.Password,
+	}
+
+	if request.Password != "" {
+		user.SetPassword(user.Password)
 	}
 
 	database.DB().Model(&user).Where("id = ?", user.Id).Updates(user)
 
+	if user.RoleId == 1 {
+		return c.Redirect("/admin")
+	}
+
 	return c.Redirect("/user")
 }
 
-func Update(c *fiber.Ctx) error {
-	//temp := GetUserId(c.Params("key"))
-	return c.Render("update", fiber.Map{})
+func GetUpdate(c *fiber.Ctx) error {
+	cookie := c.Cookies("jwt")
+
+	id, _ := middlewares.ParseJwt(cookie)
+
+	var user models.User
+
+	database.DB().Where("id = ?", id).First(&user)
+
+	return c.Render("update", user)
 }
 
 func Delete(c *fiber.Ctx) error {
@@ -185,20 +226,4 @@ func Delete(c *fiber.Ctx) error {
 	database.DB().Delete(&user)
 
 	return c.Redirect("/success")
-}
-
-func User(c *fiber.Ctx) error {
-	cookie := c.Cookies("jwt")
-
-	id, _ := middlewares.ParseJwt(cookie)
-
-	var user models.User
-
-	database.DB().Where("id = ?", id).First(&user)
-
-	return c.Render("user", user)
-}
-
-func UserPage(c *fiber.Ctx) error {
-	return c.Render("user", fiber.Map{})
 }

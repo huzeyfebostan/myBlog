@@ -11,10 +11,12 @@
 <div class="login-page">
   <div class="form">
     <form action="/register" method="post" class="login-form">
+        <h2>Register</h2>
         <input name="firstname" type="text" placeholder="First Name" required/>
         <input name="lastname" type="text" placeholder="Last Name" required/>
         <input name="email" type="text" placeholder="E-mail Address" required/>
-        <input name="password" type="password" placeholder="******" required/>
+        <input name="password" type="password" placeholder="Password" required/>
+        <input name="passwordconfirm" type="password" placeholder="Password confirm" required/>
         <button>Sign Up</button>
       <form action="/login" method="get">
         <p class="message">Already registered? <a href="/login">Sign In</a></p>

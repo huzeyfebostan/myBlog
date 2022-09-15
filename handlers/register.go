@@ -1,27 +1,41 @@
 package handlers
 
 import (
-	"fmt"
+	"errors"
 	"github.com/gofiber/fiber/v2"
 	"github.com/huzeyfebostan/myBlog/database"
 	"github.com/huzeyfebostan/myBlog/models"
 )
 
-func RegisterGet(c *fiber.Ctx) error {
+func GetRegister(c *fiber.Ctx) error {
 	return c.Render("register", fiber.Map{})
 }
 
-func RegisterPost(c *fiber.Ctx) error {
-	var user models.User
-	if err := c.BodyParser(&user); err != nil {
+func PostRegister(c *fiber.Ctx) error {
+
+	var request models.RequestRegister
+
+	if err := c.BodyParser(&request); err != nil {
 		return err
 	}
+
+	if request.Password != request.PasswordConfirm {
+		return errors.New("passwords do not match")
+	}
+
+	user := models.User{
+		FirstName: request.FirstName,
+		LastName:  request.LastName,
+		Email:     request.Email,
+		Password:  request.Password,
+	}
+
 	user.SetPassword(user.Password)
 	user.RoleId = 2
 
 	err := database.DB().Create(&user).Error
 	if err != nil {
-		fmt.Println(err)
+		return errors.New("unable to create user")
 	}
 	return c.Redirect("/login")
 }

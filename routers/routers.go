@@ -20,7 +20,6 @@ func Setup(app *fiber.App) {
 
 	app.Use(middlewares.IsAuthenticated)
 	//TODO: Şifre gizlenecek (sor)
-	//TODO: Bilgileri güncellenen kullanıcının veri tabanınında sadece güncellenen verisi değişecek diğerleri aynı kalacak
 	//TODO: Giriş yapan kullanıcı dışında başka kullanıcının bilgileri gözükmeyecek
 	//TODO: Aynı kullanıcı kayıt kontrolu yap
 	app.Get("/user", handlers.User)
@@ -28,7 +27,7 @@ func Setup(app *fiber.App) {
 
 	app.Get("/admin", handlers.Admin)
 
-	app.Get("/admin/:key", handlers.GetUser)
+	//app.Get("/admin/:key", handlers.GetUser)
 	app.Get("/update", handlers.Update)
 	app.Get("/update/:key", handlers.GetUser)
 	app.Post("/update/:key", handlers.GetUpdate)

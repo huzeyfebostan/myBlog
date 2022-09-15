@@ -114,7 +114,7 @@ func GetUser(c *fiber.Ctx) error {
 
 	database.DB().Preload("id ").Find(&temp)
 
-	return c.Render("admin", temp)
+	return c.Render("update", temp)
 }
 
 func GetUserId(id string) models.User {
@@ -127,7 +127,24 @@ func GetUserId(id string) models.User {
 }
 
 func GetUpdate(c *fiber.Ctx) error {
-	key := c.Params("key")
+	if err := middlewares.IsAuthorized(c, "users"); err != nil {
+		return err
+	}
+
+	id, _ := strconv.Atoi(c.Params("key"))
+
+	user := models.User{
+		Id: uint(id),
+	}
+
+	if err := c.BodyParser(&user); err != nil {
+		return err
+	}
+
+	database.DB().Model(&user).Where("id = ?", user.Id).Updates(user)
+
+	return c.Redirect("/user")
+	/*key := c.Params("key")
 
 	var request, temp models.User
 
@@ -144,7 +161,7 @@ func GetUpdate(c *fiber.Ctx) error {
 	temp = request
 	database.DB().Save(&temp)
 
-	return c.Redirect(url)
+	return c.Redirect(url)*/
 }
 
 func Update(c *fiber.Ctx) error {

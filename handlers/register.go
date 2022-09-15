@@ -16,8 +16,8 @@ func RegisterPost(c *fiber.Ctx) error {
 	if err := c.BodyParser(&user); err != nil {
 		return err
 	}
-	//TODO: Aynı kullanıcı kayıt kontrolu yap
 	user.SetPassword(user.Password)
+	user.RoleId = 2
 
 	err := database.DB().Create(&user).Error
 	if err != nil {

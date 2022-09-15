@@ -93,7 +93,7 @@ func Logout(c *fiber.Ctx) error {
 	if err := UserControl(c); err != true {
 		return c.Redirect("/unsuccess")
 	}
-	return c.Render("success", fiber.Map{})
+	return c.Redirect("/")
 }
 
 func UserControl(c *fiber.Ctx) bool {
@@ -178,4 +178,16 @@ func Delete(c *fiber.Ctx) error {
 	database.DB().Delete(&user)
 
 	return c.Redirect("/success")
+}
+
+func User(c *fiber.Ctx) error {
+	cookie := c.Cookies("jwt")
+
+	id, _ := middlewares.ParseJwt(cookie)
+
+	var user models.User
+
+	database.DB().Where("id = ?", id).First(&user)
+
+	return c.Redirect("success")
 }

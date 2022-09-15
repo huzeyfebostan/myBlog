@@ -74,7 +74,11 @@ func LoginPost(c *fiber.Ctx) error {
 
 	c.Cookie(&cookie)
 
-	return c.Redirect("/admin")
+	if user.RoleId == 1 {
+		return c.Redirect("/admin")
+	}
+
+	return c.Redirect("/user")
 }
 
 func Unsuccess(c *fiber.Ctx) error {
@@ -190,4 +194,8 @@ func User(c *fiber.Ctx) error {
 	database.DB().Where("id = ?", id).First(&user)
 
 	return c.Redirect("success")
+}
+
+func UserPage(c *fiber.Ctx) error {
+	return c.Render("user", fiber.Map{})
 }

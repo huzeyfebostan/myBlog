@@ -25,6 +25,8 @@ func Setup(app *fiber.App) {
 	//TODO: Bilgileri güncellenen kullanıcının veri tabaınında sadece güncellenen verisi değişecek diğerleri aynı kalacak
 	//TODO: Giriş yapan kullanıcı dışında başka kullanıcının bilgileri gözükmeyecek
 	//TODO: Aynı kullanıcı kayıt kontrolu yap
+	app.Get("/user", handlers.UserPage)
+
 	app.Get("/admin", handlers.Admin)
 
 	app.Get("/admin/:key", handlers.GetUser)

@@ -20,7 +20,6 @@ func Setup(app *fiber.App) {
 
 	app.Use(middlewares.IsAuthenticated)
 	//TODO: Şifre gizlenecek (sor)
-	//TODO: Giriş yapan kullanıcı dışında başka kullanıcının bilgileri gözükmeyecek
 	//TODO: Aynı kullanıcı kayıt kontrolu yap
 	app.Get("/user", handlers.User)
 	app.Get("/user/:key", handlers.GetUser)

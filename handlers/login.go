@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
@@ -110,11 +111,26 @@ func GetUser(c *fiber.Ctx) error {
 	if err := middlewares.IsAuthorized(c, "users"); err != nil {
 		return err
 	}
+
+	cookie := c.Cookies("jwt")
+	id, _ := middlewares.ParseJwt(cookie)
+	Id, _ := strconv.Atoi(id)
+
+	activeuser := GetUserId(id)
+
 	temp := GetUserId(c.Params("key"))
 
-	database.DB().Preload("id ").Find(&temp)
+	if activeuser.RoleId == 1 {
+		return c.Render("update", temp)
+	} else {
+		if uint(Id) == temp.Id {
+			database.DB().Preload("id ").Find(&temp)
 
-	return c.Render("update", temp)
+			return c.Render("update", temp)
+		}
+
+	}
+	return errors.New("unauthorized")
 }
 
 func GetUserId(id string) models.User {
@@ -144,24 +160,6 @@ func GetUpdate(c *fiber.Ctx) error {
 	database.DB().Model(&user).Where("id = ?", user.Id).Updates(user)
 
 	return c.Redirect("/user")
-	/*key := c.Params("key")
-
-	var request, temp models.User
-
-	if err := c.BodyParser(&request); err != nil {
-		return err
-	}
-	if err := database.DB().Where("id = ?", key).First(&temp).Error; err != nil {
-		return err
-	}
-	request.Id = temp.Id
-
-	url := fmt.Sprintf("/update/%d", temp.Id)
-
-	temp = request
-	database.DB().Save(&temp)
-
-	return c.Redirect(url)*/
 }
 
 func Update(c *fiber.Ctx) error {

@@ -15,9 +15,13 @@ func Setup(app *fiber.App) {
 
 	app.Get("/login", handlers.LoginGet)
 	app.Post("/login", handlers.LoginPost)
-
+	//TODO: Admin panelinde kullanıcı bilgileri gözükecek
+	//TODO: Giriş yapan kullanıcının bilgileri otomatik gelecek
+	//TODO: Şifre gizlenecek (sor)
+	//TODO: Bilgileri güncellenen kullanıcının veri tabaınında sadece güncellenen verisi değişecek diğerleri aynı kalacak
+	//TODO: Giriş yapan kullanıcı dışında başka kullanıcının bilgileri gözükmeyecek
 	app.Get("/admin", handlers.Admin)
-	//app.Post("/admin/:key", handlers.GetUser)
+	app.Get("/admin/:key", handlers.GetUser)
 	app.Get("/update", handlers.Update)
 	app.Get("/update/:key", handlers.GetUser)
 	app.Post("/update/:key", handlers.GetUpdate)

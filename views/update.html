@@ -1,48 +1,4 @@
 <!DOCTYPE html>
-<!--<html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../assets/css/login.css">
-  <title>Update Page</title>
-</head>
-<body>
-<h2>Update User</h2>
-<div class="pagecontainer">
-  <form action="/update/{{.Id}}" method="post">
-    <div>
-      <div class="itemcontainer">
-        <p> {{.FirstName}}</p>
-        <label for="Firstname">First name:</label>
-        <input type="text" id="Firstname" name="firstname"><br><br>
-      </div>
-      <div class="itemcontainer">
-        <p> {{.LastName}}</p>
-        <label for="Lastname">Last name:</label>
-        <input type="text" id="Lastname" name="lastname"><br><br>
-      </div>
-      <div class="itemcontainer">
-        <p> {{.Email}}</p>
-        <label for="Email">E-mail:</label>
-        <input type="text" id="Email" name="email"><br><br>
-      </div>
-      <div class="itemContainer">
-        <p> {{.Password}}</p>
-        <label for="password">Password:</label>
-        <input type="text" id="password" name="Password"><br><br>
-      </div>
-    </div>
-    <button type="submit"><b>Update</b></button>
-  </form>
-  <div class="itemContainer">
-    <form action="/delete/{{.Id}}" method="get">
-      <button type="submit"><b>Delete</b></button>
-    </form>
-  </div>
-</div>
-</body>
-</html>-->
-
-<!DOCTYPE html>
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
@@ -57,7 +13,7 @@
     <form action="/update/{{.Id}}" method="post">
       <h4>First Name</h4>
       <p> {{.FirstName}}</p>
-      <input name="firstname" type="text" {{.FirstName}}/>
+      <input name="firstname" type="text" placeholder="First Name"/>
       <h4>Last Name</h4>
       <p> {{.LastName}}</p>
       <input name="lastname" type="text" placeholder="Last Name"/>

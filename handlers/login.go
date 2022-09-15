@@ -59,22 +59,6 @@ func LoginPost(c *fiber.Ctx) error {
 	sess.Set("email", user.Email)
 	sess.Set("psw", user.Password)*/
 
-	/*clams := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.RegisteredClaims{
-		Issuer:    strconv.Itoa(int(user.Id)),
-		ExpiresAt: jwt.NewNumericDate(expireTime),
-	})
-
-	token, err := clams.SignedString([]byte(SecretKey))
-
-	cookie := fiber.Cookie{
-		Name:     "jwt",
-		Value:    token,
-		Expires:  time.Now().Add(time.Hour * 24),
-		HTTPOnly: true,
-	}
-
-	c.Cookie(&cookie)*/
-
 	token, err := middlewares.GenerateJwt(strconv.Itoa(int(user.Id)))
 
 	if err != nil {
@@ -136,9 +120,9 @@ func UserControl(c *fiber.Ctx) bool {
 func GetUser(c *fiber.Ctx) error {
 	temp := GetUserId(c.Params("key"))
 
-	database.DB().Preload("ID ").Find(&temp)
+	database.DB().Preload("id ").Find(&temp)
 
-	return c.Render("update", temp)
+	return c.Render("admin", temp)
 }
 
 func GetUserId(id string) models.User {

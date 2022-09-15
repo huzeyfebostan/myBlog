@@ -1,40 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" >
 <head>
-    <link rel="stylesheet" href="../assets/css/admin.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Admin Page</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../assets/css/adminn.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <title>Admin</title>
 </head>
 <body>
-<h2>Admin</h2>
-<div class="pagecontainer">
-    <form action="/admin/{{.ID}}" method="post">
-        <div>
-            <div class="itemcontainer">
-                <p> {{.FirstName}}</p>
-            </div>
-            <div class="itemcontainer">
-                <p> {{.LastName}}</p>
-            </div>
-            <div class="itemcontainer">
-                <p> {{.Email}}</p>
-            </div>
-            <div class="itemContainer">
-                <p> {{.Password}}</p>
-            </div>
-        </div>
-    </form>
-    <div class="itemContainer">
-        <form action="/success", method="get">
+<div class="login-page">
+    <div class="form">
+        <h2>Admin</h2>
+        <form action="/admin/{{.Id}}" method="get">
+            <p> {{.FirstName}}</p>
+            <p> {{.LastName}}</p>
+            <p> {{.Email}}</p>
+            <p id="passwd" > {{.Password}}</p>
+            <i class="fa fa-eye parola" onClick="parolaGoster('passwd', this)">   </i>
+        </form>
+        <form action="/success" method="get">
             <button type="submit"><b>Logout</b></button>
         </form>
-    </div>
-    <div class="itemContainer">
-        <form action="/update", method="get">
+        <form action="/update" method="get">
             <button type="submit"><b>Update</b></button>
         </form>
     </div>
 </div>
+<script>
+    function parolaGoster(id, el) {
+        let x = document.getElementById(id);
+        if (x.type === "password") {
+            x.type = "text";
+            el.className = 'fa fa-eye-slash parola';
+        } else {
+            x.type = "password";
+            el.className = 'fa fa-eye parola';
+        }
+    }
+</script>
 </body>
 </html>
+

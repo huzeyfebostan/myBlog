@@ -1,7 +1,0 @@
-.pagecontainer{
-    display: flex;
-}
-
-.itemContainer{
-    flex-direction: column;
-}

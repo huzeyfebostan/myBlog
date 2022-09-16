@@ -38,11 +38,11 @@ func PostLogin(c *fiber.Ctx) error {
 	database.DB().Where("email = ?", request.Email).First(&user)
 
 	if user.Id == 0 {
-		return c.Redirect("/unsucces")
+		return c.Redirect("There is no such user")
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(request.Password)); err != nil {
-		return c.Redirect("/unsuccess")
+		return err
 	}
 
 	token, err := middlewares.GenerateJwt(strconv.Itoa(int(user.Id)))
@@ -67,9 +67,7 @@ func PostLogin(c *fiber.Ctx) error {
 	return c.Redirect("/user")
 }
 
-func Unsuccess(c *fiber.Ctx) error {
-	return c.Render("unsuccess", fiber.Map{})
-}
+//TODO: Kullanıcı logout yapmadığı zaman serveri tekrar bile başlatsan Authenticated çalışmıyoru. Çıkış yaptıktan sonra çalışıyor sadece
 
 func Logout(c *fiber.Ctx) error {
 	cookie := fiber.Cookie{
@@ -81,7 +79,7 @@ func Logout(c *fiber.Ctx) error {
 
 	c.Cookie(&cookie)
 	if err := UserControl(c); err != true {
-		return c.Redirect("/unsuccess")
+		return errors.New("Giriş yapmadan nasıl çıkış yapıyorsun")
 	}
 	return c.Redirect("/")
 }
@@ -115,6 +113,10 @@ func User(c *fiber.Ctx) error {
 	var user models.User
 
 	database.DB().Where("id = ?", id).First(&user)
+
+	if user.RoleId == 1 {
+		return c.Render("admin", user)
+	}
 
 	return c.Render("user", user)
 }
@@ -225,5 +227,5 @@ func Delete(c *fiber.Ctx) error {
 
 	database.DB().Delete(&user)
 
-	return c.Redirect("/success")
+	return c.Redirect("/")
 }

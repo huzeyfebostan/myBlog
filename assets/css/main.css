@@ -1,0 +1,158 @@
+
+body {
+    margin: 0;
+    background-color: #f0f2f5;
+    -webkit-font-smoothing: antialiased;
+}
+
+.header-bottom{
+    background-color: #FFFFFF;
+    padding: 0 60px 0;
+}
+
+.container{
+    padding: 0 15px 0;
+}
+
+.row{
+    align-items: center;
+}
+
+.header-search {
+    display: flex;
+    min-width: 200px;
+    height: 40px;
+    padding: 20px 0;
+    float: right;
+    margin-top: 0;
+}
+
+.mainmenu {
+    margin: 0px 10px 0px;
+    display: flex;
+}
+
+.metabar-block {
+    display: flex;
+    gap: 20px;
+    padding-right: 20px;
+}
+
+.login {
+    width: 100px;
+    background-color: #2da355;
+    border-radius: 15px;
+    display: flex;
+}
+
+.login button {
+    color: white;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+}
+
+button svg {
+    width: 20px;
+}
+
+.register {
+    width: 120px;
+    background-color: #2da355;
+    border-radius: 15px;
+    display: flex;
+}
+
+.register button {
+    color: white;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: 100%;
+}
+
+form {
+    display: flex;
+    background-color: #f1f2f5;
+    border-radius: 15px;
+    position: relative;
+    margin-top: 2px;
+}
+
+.menu a:hover {
+    text-decoration: underline;
+    text-decoration-color: #2ca456;
+}
+
+input[type="search"] {
+    border: none;
+    background: transparent;
+    margin: 0;
+    padding: 7px 8px;
+    font-size: 14px;
+    color: black;
+    outline: none;
+}
+
+form:focus-within {
+    outline: #2da355 solid 1px;
+}
+
+button[type="submit"] {
+    text-indent: -999px;
+    border: none;
+    overflow: hidden;
+    width: 20px;
+    padding: 0;
+    margin: 0 10px;
+    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat center;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+li a {
+    float: left;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    display: block;
+    color: #878687;
+    text-align: center;
+    font-size: 18px;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #ffffff;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
+}
+
+@media screen and (max-width: 600px) {
+    ul a, .search-container input[type="search"] {
+        float: none;
+        display: block;
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        padding: 14px;
+    }
+
+    .search-container input[type="search"] {
+        border: 1px solid #ccc;
+    }
+}
+
+

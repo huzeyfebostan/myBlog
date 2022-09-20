@@ -436,9 +436,9 @@ input[type="email"]{
 
 .footer-bottom-rows{
     align-items: center;
-    height: 100%;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row;
+    height: 100%;
     margin-right: -15px;
     margin-left: -15px;
 }
@@ -461,18 +461,17 @@ input[type="email"]{
     cursor: pointer;
 }
 
-.bottom-menu{
-    margin-top: 12px;
-}
-
-.aboutme{
-    text-decoration: none;
-}
-
 .bottom-col2{
     position: relative;
-    width: 100%;
+    width: 225px;
+    height: 23px;
     padding-right: 15px;
     padding-left: 15px;
+}
+
+.copyright{
+    font-size: 14px;
+    text-align: right;
+    margin-top: 9px;
 }
 

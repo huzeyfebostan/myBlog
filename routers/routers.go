@@ -26,6 +26,9 @@ func Setup(app *fiber.App) {
 	app.Get("/admin", handlers.User)
 	app.Get("/admin/:key", handlers.GetUser)
 
+	app.Get("/article", handlers.GetArticle)
+	app.Post("/article", handlers.CreateArticle)
+
 	app.Get("/adminUpdate/:key", handlers.GetUser)
 	app.Post("/adminUpdate/:key", handlers.Update)
 

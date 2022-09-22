@@ -12,3 +12,11 @@ type RequestRegister struct {
 	Password        string `json:"-"`
 	PasswordConfirm string `json:"-"`
 }
+
+type RequestArticle struct {
+	ImgSrc   string `json:"imgSrc"`
+	Title    string `json:"title"`
+	Summary  string `json:"summary"`
+	Content  string `json:"content"`
+	Category string `json:"category"`
+}

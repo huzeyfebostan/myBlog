@@ -194,22 +194,6 @@ func Update(c *fiber.Ctx) error {
 	return c.Redirect("/user")
 }
 
-func GetUpdate(c *fiber.Ctx) error {
-	if err := middlewares.IsAuthorized(c, "users"); err != nil {
-		return err
-	}
-
-	cookie := c.Cookies("jwt")
-
-	id, _ := middlewares.ParseJwt(cookie)
-
-	var user models.User
-
-	database.DB().Where("id = ?", id).First(&user)
-
-	return c.Render("update", user)
-}
-
 func Delete(c *fiber.Ctx) error {
 	/*key := c.Params("key")
 

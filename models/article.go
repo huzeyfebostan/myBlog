@@ -1,17 +1,13 @@
 package models
 
-import (
-	"gorm.io/gorm"
-)
+import "gorm.io/gorm"
 
 type Article struct {
 	gorm.Model
-	Id       uint   `json:"id"`
 	WriterId uint   `json:"writerId"`
 	ImgSrc   string `json:"imgSrc"`
 	Title    string `json:"title"`
-	Text     string `json:"text"`
-	Head     string `json:"head"`
-	View     uint   `json:"view"`
+	Summary  string `json:"summary"`
+	Content  string `json:"content"`
 	Category string `json:"category"`
 }

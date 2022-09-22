@@ -10,7 +10,9 @@ func Setup(app *fiber.App) {
 
 	app.Static("/", "./")
 
-	app.Get("/", handlers.MainPage)
+	//app.Get("/", handlers.MainPage)
+	app.Get("/", handlers.AllArticle)
+	//app.Get("/articles", handlers.AllArticle)
 
 	app.Get("/login", handlers.GetLogin)
 	app.Post("/login", handlers.PostLogin)

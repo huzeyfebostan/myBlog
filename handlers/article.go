@@ -38,3 +38,11 @@ func CreateArticle(c *fiber.Ctx) error {
 
 	return c.Redirect("/")
 }
+
+func AllArticle(c *fiber.Ctx) error {
+	var article []models.Article
+
+	database.DB().Find(&article)
+
+	return c.Render("mainPage", article)
+}

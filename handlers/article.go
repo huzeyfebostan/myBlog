@@ -40,9 +40,9 @@ func CreateArticle(c *fiber.Ctx) error {
 }
 
 func AllArticle(c *fiber.Ctx) error {
-	var article []models.Article
+	var Article []models.Article
 
-	database.DB().Find(&article)
+	database.DB().Find(&Article)
 
-	return c.Render("mainPage", article)
+	return c.Render("mainPage", Article)
 }

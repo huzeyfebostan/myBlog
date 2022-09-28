@@ -7,7 +7,6 @@ import (
 )
 
 type Article struct {
-	gorm.Model
 	WriterId uint   `json:"writerId"`
 	ImgSrc   string `json:"imgSrc"`
 	Title    string `json:"title"`

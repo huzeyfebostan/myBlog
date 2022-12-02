@@ -20,3 +20,11 @@ func (user *User) SetPassword(password string) {
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	user.Password = string(hashedPassword)
 }
+
+func (user *User) Count(db *gorm.DB) int64 {
+	var total int64
+
+	db.Model(&User{}).Count(&total)
+
+	return total
+}

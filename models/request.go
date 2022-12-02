@@ -6,11 +6,11 @@ type RequestSignIn struct {
 }
 
 type RequestRegister struct {
-	FirstName       string `json:"firstname"`
-	LastName        string `json:"lastname"`
+	FirstName       string `json:"first_name"`
+	LastName        string `json:"last_name"`
 	Email           string `json:"email"`
-	Password        string `json:"-"`
-	PasswordConfirm string `json:"-"`
+	Password        string `json:"password"`
+	PasswordConfirm string `json:"password_confirm"`
 }
 
 type RequestArticle struct {

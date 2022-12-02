@@ -84,6 +84,8 @@ func Logout(c *fiber.Ctx) error {
 	return c.Redirect("/")
 }
 
+//TODO: AllUser fonksiyonu ekle, bütün kullanıcıları listeleyecek fonksiyon
+
 func UserControl(c *fiber.Ctx) bool {
 	cookie := c.Cookies("jwt")
 
@@ -130,11 +132,11 @@ func GetUser(c *fiber.Ctx) error {
 	id, _ := middlewares.ParseJwt(cookie)
 	Id, _ := strconv.Atoi(id)
 
-	activeuser := GetUserId(id)
+	activeUser := GetUserId(id)
 
 	temp := GetUserId(c.Params("key"))
 
-	if activeuser.RoleId == 1 {
+	if activeUser.RoleId == 1 {
 		return c.Render("adminUpdate", temp)
 	} else {
 		if uint(Id) == temp.Id {

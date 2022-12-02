@@ -14,11 +14,11 @@ func Setup(app *fiber.App) {
 	app.Get("/", handlers.AllArticle)
 	//app.Get("/articles", handlers.AllArticle)
 
-	app.Get("/login", handlers.GetLogin)
+	//app.Get("/login", handlers.GetLogin)
 	app.Post("/login", handlers.PostLogin)
 
-	app.Get("/register", handlers.GetRegister)
-	app.Post("/register", handlers.PostRegister)
+	//app.Get("/register", handlers.GetRegister)
+	app.Post("/register", handlers.Register)
 
 	app.Use(middlewares.IsAuthenticated)
 

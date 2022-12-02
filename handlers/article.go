@@ -44,5 +44,5 @@ func AllArticle(c *fiber.Ctx) error {
 
 	database.DB().Find(&Article)
 
-	return c.Render("mainPage", Article)
+	return c.JSON(&Article)
 }

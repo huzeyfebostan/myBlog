@@ -19,9 +19,12 @@ func Register(c *fiber.Ctx) error {
 		return err
 	}
 
-	/*if err := database.DB().Where("email = ?", request.Email).First(&user).Error; err == nil {
-		return errors.New("This mail has been used")
-	}*/
+	if err := database.DB().Where("email = ?", request.Email).First(&user).Error; err == nil {
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"message": "This mail has been used",
+		})
+	}
 
 	if request.Password != request.PasswordConfirm {
 		c.Status(400)
@@ -40,12 +43,13 @@ func Register(c *fiber.Ctx) error {
 	user.SetPassword(user.Password)
 	user.RoleId = 2
 
-	database.DB().Create(&user)
-
-	/*err := database.DB().Create(&user).Error
+	err := database.DB().Create(&user).Error
 	if err != nil {
-		return errors.New("unable to create user")
-	}*/
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"message": "unable to create user",
+		})
+	}
 
 	return c.JSON(user)
 }

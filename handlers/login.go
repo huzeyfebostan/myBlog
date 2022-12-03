@@ -25,7 +25,7 @@ func GetLogin(c *fiber.Ctx) error {
 	return c.Render("login", fiber.Map{})
 }
 
-func PostLogin(c *fiber.Ctx) error {
+func Login(c *fiber.Ctx) error {
 
 	var request models.RequestSignIn
 	var user models.User
@@ -38,15 +38,20 @@ func PostLogin(c *fiber.Ctx) error {
 	database.DB().Where("email = ?", request.Email).First(&user)
 
 	if user.Id == 0 {
-		return c.Redirect("There is no such user")
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"message": "There is no such user",
+		})
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(request.Password)); err != nil {
-		return err
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"message": "Wrong password",
+		})
 	}
 
 	token, err := middlewares.GenerateJwt(strconv.Itoa(int(user.Id)))
-
 	if err != nil {
 		return err
 	}
@@ -60,11 +65,11 @@ func PostLogin(c *fiber.Ctx) error {
 
 	c.Cookie(&cookie)
 
-	if user.RoleId == 1 {
+	/*if user.RoleId == 1 {
 		return c.Redirect("/admin")
-	}
+	}*/
 
-	return c.Redirect("/user")
+	return c.JSON(user)
 }
 
 //TODO: Kullanıcı logout yapmadığı zaman serveri tekrar bile başlatsan Authenticated çalışmıyoru. Çıkış yaptıktan sonra çalışıyor sadece

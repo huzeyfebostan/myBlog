@@ -21,10 +21,6 @@ import (
 
 const SecretKey = "secret"
 
-func GetLogin(c *fiber.Ctx) error {
-	return c.Render("login", fiber.Map{})
-}
-
 func Login(c *fiber.Ctx) error {
 
 	var request models.RequestSignIn
@@ -40,14 +36,14 @@ func Login(c *fiber.Ctx) error {
 	if user.Id == 0 {
 		c.Status(400)
 		return c.JSON(fiber.Map{
-			"message": "There is no such user",
+			"message": "Yok yok kullanıcı yok",
 		})
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(request.Password)); err != nil {
 		c.Status(400)
 		return c.JSON(fiber.Map{
-			"message": "Wrong password",
+			"message": "Şifren yanlış aloo",
 		})
 	}
 
@@ -72,7 +68,7 @@ func Login(c *fiber.Ctx) error {
 	return c.JSON(user)
 }
 
-//TODO: Kullanıcı logout yapmadığı zaman serveri tekrar bile başlatsan Authenticated çalışmıyoru. Çıkış yaptıktan sonra çalışıyor sadece
+//TODO: Kullanıcı logout yapmadığı zaman serveri tekrar bile başlatsan Authenticated çalışmıyor. Çıkış yaptıktan sonra çalışıyor sadece
 
 func Logout(c *fiber.Ctx) error {
 	cookie := fiber.Cookie{
@@ -84,9 +80,14 @@ func Logout(c *fiber.Ctx) error {
 
 	c.Cookie(&cookie)
 	if err := UserControl(c); err != true {
-		return errors.New("Giriş yapmadan nasıl çıkış yapıyorsun")
+		c.Status(400)
+		return c.JSON(fiber.Map{
+			"message": "Giriş yapmadan nasıl çıkış yapıyorsun",
+		})
 	}
-	return c.Redirect("/")
+	return c.JSON(fiber.Map{
+		"message": "Başarılı",
+	})
 }
 
 //TODO: AllUser fonksiyonu ekle, bütün kullanıcıları listeleyecek fonksiyon
@@ -121,14 +122,10 @@ func User(c *fiber.Ctx) error {
 
 	database.DB().Where("id = ?", id).First(&user)
 
-	if user.RoleId == 1 {
-		return c.Render("admin", user)
-	}
-
-	return c.Render("user", user)
+	return c.JSON(user)
 }
 
-func GetUser(c *fiber.Ctx) error {
+/*func GetUser(c *fiber.Ctx) error {
 	if err := middlewares.IsAuthorized(c, "users"); err != nil {
 		return err
 	}
@@ -152,7 +149,7 @@ func GetUser(c *fiber.Ctx) error {
 
 	}
 	return errors.New("unauthorized")
-}
+}*/
 
 func GetUserId(id string) models.User {
 	var user models.User

@@ -15,30 +15,35 @@ func Setup(app *fiber.App) {
 	//app.Get("/articles", handlers.AllArticle)
 
 	//app.Get("/login", handlers.GetLogin)
+
 	app.Post("/login", handlers.Login)
+	app.Post("/register", handlers.Register)
 
 	//app.Get("/register", handlers.GetRegister)
-	app.Post("/register", handlers.Register)
 
 	app.Use(middlewares.IsAuthenticated)
 
 	app.Get("/user", handlers.User)
-	app.Get("/user/:key", handlers.GetUser)
+	app.Get("/logout", handlers.Logout)
 
-	app.Get("/admin", handlers.User)
-	app.Get("/admin/:key", handlers.GetUser)
+	app.Get("/users", handlers.AllUsers)
+	app.Post("/users", handlers.CreateUser)
+	app.Get("/users/:id", handlers.GetUser)
+	app.Put("/users/:id", handlers.UpdateUser)
+	app.Delete("/users/:id", handlers.DeleteUser)
+
+	//app.Post("/update/:key", handlers.Update)
+	//app.Get("/admin", handlers.User)
+	//app.Get("/admin/:key", handlers.GetUser)
 
 	app.Get("/article", handlers.GetArticle)
 	app.Post("/article", handlers.CreateArticle)
 
-	app.Get("/adminUpdate/:key", handlers.GetUser)
-	app.Post("/adminUpdate/:key", handlers.Update)
+	//app.Get("/adminUpdate/:key", handlers.GetUser)
+	//app.Post("/adminUpdate/:key", handlers.Update)
 
-	app.Get("/update/:key", handlers.GetUser)
-	app.Post("/update/:key", handlers.Update)
+	//app.Get("/update/:key", handlers.GetUser)
 
 	app.Get("/delete/:key", handlers.Delete)
 	app.Post("/update/:key", handlers.Delete)
-
-	app.Get("/", handlers.Logout)
 }

@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"errors"
-	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/huzeyfebostan/myBlog/database"
@@ -25,6 +23,7 @@ func Login(c *fiber.Ctx) error {
 
 	var request models.RequestSignIn
 	var user models.User
+	var log models.UserLog
 
 	err := c.BodyParser(&request)
 	if err != nil {
@@ -61,6 +60,8 @@ func Login(c *fiber.Ctx) error {
 
 	c.Cookie(&cookie)
 
+	log.UserId = user.Id
+	database.DB().Create(&log)
 	/*if user.RoleId == 1 {
 		return c.Redirect("/admin")
 	}*/
@@ -89,8 +90,6 @@ func Logout(c *fiber.Ctx) error {
 		"message": "Başarılı",
 	})
 }
-
-//TODO: AllUser fonksiyonu ekle, bütün kullanıcıları listeleyecek fonksiyon
 
 func UserControl(c *fiber.Ctx) bool {
 	cookie := c.Cookies("jwt")
@@ -123,97 +122,4 @@ func User(c *fiber.Ctx) error {
 	database.DB().Where("id = ?", id).First(&user)
 
 	return c.JSON(user)
-}
-
-/*func GetUser(c *fiber.Ctx) error {
-	if err := middlewares.IsAuthorized(c, "users"); err != nil {
-		return err
-	}
-
-	cookie := c.Cookies("jwt")
-	id, _ := middlewares.ParseJwt(cookie)
-	Id, _ := strconv.Atoi(id)
-
-	activeUser := GetUserId(id)
-
-	temp := GetUserId(c.Params("key"))
-
-	if activeUser.RoleId == 1 {
-		return c.Render("adminUpdate", temp)
-	} else {
-		if uint(Id) == temp.Id {
-			database.DB().Preload("id ").Find(&temp)
-
-			return c.Render("update", temp)
-		}
-
-	}
-	return errors.New("unauthorized")
-}*/
-
-func GetUserId(id string) models.User {
-	var user models.User
-	err := database.DB().Where("id = ?", id).First(&user).Error
-	if err != nil {
-		fmt.Println(err)
-	}
-	return user
-}
-
-func Update(c *fiber.Ctx) error {
-	if err := middlewares.IsAuthorized(c, "users"); err != nil {
-		return err
-	}
-
-	var request models.RequestRegister
-
-	id, _ := strconv.Atoi(c.Params("key"))
-
-	if err := c.BodyParser(&request); err != nil {
-		return err
-	}
-
-	if request.Password != request.PasswordConfirm {
-		return errors.New("passwords do not match")
-	}
-
-	user := models.User{
-		Id:        uint(id),
-		FirstName: request.FirstName,
-		LastName:  request.LastName,
-		Email:     request.Email,
-		Password:  request.Password,
-	}
-
-	if request.Password != "" {
-		user.SetPassword(user.Password)
-	}
-
-	database.DB().Model(&user).Where("id = ?", user.Id).Updates(user)
-
-	if user.RoleId == 1 {
-		return c.Redirect("/admin")
-	}
-
-	return c.Redirect("/user")
-}
-
-func Delete(c *fiber.Ctx) error {
-	/*key := c.Params("key")
-
-	var deluser models.User
-	if err := database.DB().Where("id = ?", key).Delete(&deluser).Error; err != nil {
-		return err
-	}*/
-
-	id, _ := strconv.Atoi(c.Params("key"))
-
-	user := models.User{
-		Id: uint(id),
-	}
-	database.DB().Where("id = ?", id).First(&user)
-
-	database.DB().Delete(&user)
-
-	return c.Redirect("/")
 }

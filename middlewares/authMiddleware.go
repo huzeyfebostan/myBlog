@@ -12,6 +12,16 @@ import (
 
 const SecretKey = "secret"
 
+func GetUserId(c *fiber.Ctx) uint {
+	cookie := c.Cookies("jwt")
+
+	Id, _ := ParseJwt(cookie)
+
+	UserId, _ := strconv.Atoi(Id)
+
+	return uint(UserId)
+}
+
 func GenerateJwt(issuer string) (string, error) {
 
 	nowTime := time.Now()
@@ -57,10 +67,10 @@ func IsAuthorized(c *fiber.Ctx, page string) error {
 		return err
 	}
 
-	userId, _ := strconv.Atoi(Id)
+	UserId, _ := strconv.Atoi(Id)
 
 	user := models.User{
-		Id: uint(userId),
+		Id: uint(UserId),
 	}
 
 	database.DB().Preload("Role").Find(&user)
@@ -84,5 +94,7 @@ func IsAuthorized(c *fiber.Ctx, page string) error {
 			}
 		}
 	}
-	return c.Redirect("/unsuccess")
+	return c.JSON(fiber.Map{
+		"message": "Yetkiniz yok",
+	})
 }

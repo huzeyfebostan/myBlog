@@ -26,4 +26,5 @@ func Connect() {
 	db.AutoMigrate(&models.Role{})
 	db.AutoMigrate(&models.Permission{})
 	db.AutoMigrate(&models.Article{})
+	db.AutoMigrate(&models.UserLog{})
 }

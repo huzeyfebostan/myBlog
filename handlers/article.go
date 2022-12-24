@@ -42,17 +42,19 @@ func ActiveUserArticles(c *fiber.Ctx) error {
 	}
 	var LastLog uint
 	log := models.UserLog{}
+	var article []models.Article
 
 	id, _ := strconv.Atoi(c.Params("id"))
 	database.DB().Select("UserId").Last(&log).Scan(&LastLog)
 
-	article := models.Article{
-		WriterId: uint(id),
-	}
-	database.DB().Where("writer_id = ?", article.WriterId).Find(&article)
-	if article.WriterId != LastLog {
+	err := database.DB().Where("writer_id = ?", uint(id)).Order("writer_id").Limit(7).Find(&article).Error
+	if id != int(LastLog) {
 		return c.JSON(fiber.Map{
 			"message": "Yetkiniz yok",
+		})
+	} else if err != nil {
+		return c.JSON(fiber.Map{
+			"message": "Henüz makaleniz yok",
 		})
 	}
 

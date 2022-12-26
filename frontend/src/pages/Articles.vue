@@ -1,10 +1,10 @@
 <template>
-<p>Bu kısma footer gelecek</p>
+
 </template>
 
 <script>
 export default {
-  name: "appFooter"
+  name: "Articles"
 }
 </script>
 

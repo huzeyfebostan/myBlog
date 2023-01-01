@@ -2,6 +2,7 @@
   <div class="row">
     <header
       class="d-flex  align-items-center justify-content-center justify-content-md-between py-3 mb-3 border-bottom">
+      <div class="col"></div>
       <div class="d-flex align-items-center col-md-3 mb-md-0 img-fluid">
         <img src="../assets/image/Blog-logo.png" width="45"/>
       </div>
@@ -24,49 +25,12 @@
           <button onclick="location.href= '../pages/Login-Register'" type="button" class="btn  me-2" style="background-color: lightseagreen; color: whitesmoke; font-size: 23px">Giriş</button>
           <button onclick="location.href= '../pages/Login-Register'" type="button" class="btn" style="background-color: lightseagreen; color: whitesmoke; font-size: 23px"> Kayıt</button>
         </div>
-        <!--<div class="dropdown">
-          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1"
-                  data-bs-toggle="dropdown" aria-expanded="false" style="background-color: lightseagreen; color: whitesmoke">
-            Kullanıcı Adı
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">Bilgiler</a></li>
-            <li><a class="dropdown-item" href="#">Yazılan Makaleler</a></li>
-            <li><a class="dropdown-item" href="#">Çıkış Yap</a></li>
-          </ul>
-        </div>-->
       </div>
+      <div class="col"></div>
     </header>
-    <!--<div class="row header-bottom text-center">
-      <div class="col-6 d-flex">
-        <div class="col">
-          <p>Ana Sayfa</p>
-        </div>
-        <div class="col">
-          <p>Makaleler</p>
-        </div>
-        <div class="col">
-          <p>Yazarlar</p>
-        </div>
-        <div class="col">
-          <p>Kategoriler</p>
-        </div>
-      </div>
-      <div class="col-6 d-flex">
-        <div class="col">
-          <p>Search Bar</p>
-        </div>
-        <div class="col">
-          <p>Giriş</p>
-        </div>
-        <div class="col">
-          <p>Kayıt</p>
-        </div>
-      </div>
-    </div>-->
   </div>
 </template>
-
+/todo: burada biraz daha düzenleme yapılabilir mesela border çizgisi boydan boya değilde sadece componentlerin altınnda olabilir.
 <script>
 
 export default {

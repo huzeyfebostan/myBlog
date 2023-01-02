@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
+  <div class="container py-4">
     <div class="row">
       <div class="col-md"></div>
       <div class="col-md-4 border-bottom">
-        <p>Deneme</p>
+        <p style="font-weight: bold">Sosyal Medya</p>
       </div>
       <div class="col-md"></div>
       <div class="col-md-4 border-bottom">
@@ -14,11 +14,11 @@
     <div class="row">
       <div class="col-md"></div>
       <div class="col-md-4">
-        <p>Deneme3</p>
+        <img src="../assets/image/Blog-logo.png" width="45"/>
       </div>
       <div class="col-md"></div>
       <div class="col-md-4">
-        <p>Deneme4</p>
+        <p class="copyright">Hbostan © Copyright 2022</p>
       </div>
       <div class="col-md"></div>
     </div>
@@ -28,7 +28,7 @@
 <!--
 * Col row ayarlandı
 * border çizgisi çekildi
-* içlerini doldurma kaldı
+* footer
 -->
 
 <script>
@@ -41,6 +41,10 @@ export default {
 
 .container {
   background-color: white;
+}
+
+.copyright{
+  text-align: end;
 }
 
 </style>

@@ -22,8 +22,8 @@
       </ul>
       <div class="col-md-3 text-end">
         <div class="login-container">
-          <button onclick="location.href= '../pages/Login-Register'" type="button" class="btn  me-2" style="background-color: lightseagreen; color: whitesmoke; font-size: 23px">Giriş</button>
-          <button onclick="location.href= '../pages/Login-Register'" type="button" class="btn" style="background-color: lightseagreen; color: whitesmoke; font-size: 23px"> Kayıt</button>
+          <button @click="Login" class="btn  me-2" style="background-color: lightseagreen; color: whitesmoke; font-size: 23px">Giriş</button>
+          <button @click="location.href= '../pages/Login-Register'" type="button" class="btn" style="background-color: lightseagreen; color: whitesmoke; font-size: 23px"> Kayıt</button>
         </div>
       </div>
       <div class="col"></div>
@@ -38,6 +38,11 @@ export default {
   data: function () {
     return {
       UserActive: false,
+    }
+  },
+  methods: {
+    Login() {
+
     }
   }
 }
